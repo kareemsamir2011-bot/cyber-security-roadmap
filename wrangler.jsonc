@@ -1,8 +1,7 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
+  "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "cyber-security-roadmap",
-  "main": "worker.js",
-  "no_bundle": true,
+  "main": "./worker.js",
   "compatibility_date": "2026-09-06",
   "assets": {
     "directory": ".",
