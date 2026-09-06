@@ -1,7 +1,6 @@
 /* Verified course durations. Values are total video/content hours, not study time. */
 const COURSE_DURATION_HOURS={
   '1:0':19.4261,
-  '1:1':36.2833,
   '2:0':19.55,
   '3:0':37,
   '3:1':88.05,
@@ -24,9 +23,8 @@ const COURSE_DURATION_HOURS={
 
 const COURSE_DURATION_SOURCE={
   '1:0':'Nouvil CS50 page: sum of all listed video durations in Weeks 0–7 = 19h 25m 38s; Weeks 8–10 have no durations published on the page',
-  '1:1':'Teracourses: Sameh Ramadan A+ — 36h 17m / 56 lessons',
   '2:0':'Teracourses: Sameh Ramadan Network+ — 19h 33m / 36 lessons',
-  '3:0':'Public course listing for the exact Windows Server playlist — 37h',
+  '3:0':'Public course listing for the exact Linux playlist — 37h',
   '3:1':'Teracourses: Arab Linux Community Linux System Administration — 88h 3m / 91 lessons',
   '4:0':'Technawi.net Telegram post for the exact PowerShell video — 18m 55s',
   '5:0':'Video metadata: Yehia Tech HTML & CSS — 1h 24m 2s',
