@@ -1,4 +1,4 @@
-const C="cyber-roadmap-v26";
+const C="cyber-roadmap-v27";
 const A=["./","./index.html","./manifest.webmanifest","./icon.svg","./styles.css","./fix-v20.css","./fix-v21.css","./fix-v22.css","./fix-v23.css","./fix-v24.js","./fix-v25.js","./fix-v26.js","./app.js","./duration-data.js"];
 self.addEventListener("install",e=>e.waitUntil(self.skipWaiting()));
 self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim())));
