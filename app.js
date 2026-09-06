@@ -1,6 +1,6 @@
 const U='https://hlijqqugqglybrutooak.supabase.co',K='sb_publishable_OKCjPi6GZ7n3MLfcMyjBtw_3gHF19BI';let sb,user=null,studyHours=0,state={doneRes:{},open:{1:true},branch:'red'};const KEY='cyber_roadmap_progress_v3',STUDY='cyber_roadmap_study_hours_v1';
 const mainStages=[
-{id:1,title:'أساسيات علوم الحاسب',sub:'Computer Science',resources:[['CS50 Harvard','Nouvil','https://nouvil.net/courses/cs50-2022/'],['CompTIA A+','Sameh Ramadan','https://www.youtube.com/playlist?list=PLH-n8YK76vIiDdOMRB-ylvns-_8Zl1euV']]},
+{id:1,title:'أساسيات علوم الحاسب',sub:'Computer Science',resources:[['CS50 Harvard','Nouvil','https://nouvil.net/courses/cs50-2022/']]},
 {id:2,title:'الشبكات',sub:'Network',resources:[['CompTIA Network+','Sameh Ramadan','https://www.youtube.com/playlist?list=PLH-n8YK76vIiuIZoWvHL7AvtrDV7hR3He']]},
 {id:3,title:'لينكس',sub:'Linux',resources:[['Linux','Hacktivity-AR','https://www.youtube.com/playlist?list=PLgCu8TiZE3OZcKIqypbqIU9pG4mZjKP5C'],['Linux System Administration','Arab Linux Community','https://www.youtube.com/playlist?list=PLy1Fx2HfcmWBpD_PI4AQpjeDK5-5q6TG7']]},
 {id:4,title:'أوامر الويندوز',sub:'Windows Commands',resources:[['PowerShell','تقنية دوت نت','https://www.youtube.com/watch?v=6GPZthxEKU0']]},
@@ -10,7 +10,7 @@ const mainStages=[
 {id:8,title:'اختبار اختراق تطبيقات الويب',sub:'WAPT',resources:[['Web App Basics + Burp Suite + ZAProxy','GenTiL Security','https://www.youtube.com/watch?v=MFanMkTGJSo'],['WAPT Course','GenTiL Security','https://www.youtube.com/playlist?list=PLX621demLUSaA7ngeN7UfVzYJihHnEfv0']]}];
 const red=[{id:'r1',title:'الأمن الهجومي',sub:'Offensive Security',resources:[['OSCP','Nakerah Network','https://www.youtube.com/playlist?list=PL_yseowcuqYJc7wXtGIsshYp1B_W0M-ZK']]}];
 const blue=[{id:'b1',title:'الاستجابة للحوادث',sub:'Incident Response',resources:[['eCIR Prep','Netriders Academy - Ahmed Sultan','https://netriders.academy/courses/incident-response']]},{id:'b2',title:'أمن الشبكات',sub:'Network Security',resources:[['CCNP Security SCOR','Netriders Academy - Ahmed Sultan','https://netriders.academy/courses/scor']]}];
-const hours={};mainStages.forEach(s=>s.resources.forEach((r,i)=>hours[s.id+':'+i]=s.id===1&&i===0?50:20));
+const hours={};mainStages.forEach(s=>s.resources.forEach((r,i)=>hours[s.id+':'+i]=20));
 try{const x=JSON.parse(localStorage.getItem(KEY)||'{}');state=Object.assign(state,x);state.doneRes=state.doneRes||{};state.open=state.open||{1:true};studyHours=Number(localStorage.getItem(STUDY)||0)}catch(e){}const $=id=>document.getElementById(id);const save=()=>{localStorage.setItem(KEY,JSON.stringify(state));localStorage.setItem(STUDY,String(studyHours))};
 function message(t){const m=$('msg');if(m)m.textContent=t}
 async function sync(){if(!user)return;const now=new Date().toISOString();const rows=Object.entries(state.doneRes).map(([course_id,v])=>({user_id:user.id,course_id,completed:!!v,completed_at:v?now:null,updated_at:now}));if(rows.length){const r=await sb.from('progress').upsert(rows,{onConflict:'user_id,course_id'});if(r.error)throw r.error}const p=await sb.from('profiles').upsert({id:user.id,study_hours:studyHours||2,updated_at:now},{onConflict:'id'});if(p.error)throw p.error}
