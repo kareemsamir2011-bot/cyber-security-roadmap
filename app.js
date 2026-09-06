@@ -1,6 +1,6 @@
 const U='https://hlijqqugqglybrutooak.supabase.co',K='sb_publishable_OKCjPi6GZ7n3MLfcMyjBtw_3gHF19BI';let sb,user=null,studyHours=0,state={doneRes:{},open:{1:true},branch:'red'};const KEY='cyber_roadmap_progress_v3',STUDY='cyber_roadmap_study_hours_v1';
 const mainStages=[
-{id:1,title:'أساسيات علوم الحاسب',sub:'Computer Science',resources:[['CS50 Harvard','Nouvil','https://nouvil.net/courses/cs50-2022/']]},
+{id:1,title:'أساسيات علوم الحاسب',sub:'Computer Science',resources:[['CS50 Harvard','Nouvil','https://nouvil.net/courses/cs50-2022/'],['CompTIA A+','Sameh Ramadan','https://www.youtube.com/playlist?list=PLH-n8YK76vIiDdOMRB-ylvns-_8Zl1euV']]},
 {id:2,title:'الشبكات',sub:'Network',resources:[['CompTIA Network+','Sameh Ramadan','https://www.youtube.com/playlist?list=PLH-n8YK76vIiuIZoWvHL7AvtrDV7hR3He']]},
 {id:3,title:'لينكس',sub:'Linux',resources:[['Linux','Hacktivity-AR','https://www.youtube.com/playlist?list=PLgCu8TiZE3OZcKIqypbqIU9pG4mZjKP5C'],['Linux System Administration','Arab Linux Community','https://www.youtube.com/playlist?list=PLy1Fx2HfcmWBpD_PI4AQpjeDK5-5q6TG7']]},
 {id:4,title:'أوامر الويندوز',sub:'Windows Commands',resources:[['PowerShell','تقنية دوت نت','https://www.youtube.com/watch?v=6GPZthxEKU0']]},
