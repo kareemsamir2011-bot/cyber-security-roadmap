@@ -1,17 +1,5 @@
-const C="cyber-roadmap-v17";
+const C="cyber-roadmap-v18";
 const A=["./","./index.html","./manifest.webmanifest","./icon.svg","./styles.css","./app.js","./duration-data.js"];
 self.addEventListener("install",e=>e.waitUntil(self.skipWaiting()));
 self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim())));
-self.addEventListener("fetch",e=>{
-  if(e.request.method!=="GET")return;
-  const u=new URL(e.request.url);
-  if(u.origin===location.origin){
-    e.respondWith(fetch(e.request,{cache:"no-store"}).then(r=>{
-      const c=r.clone();
-      caches.open(C).then(x=>x.put(e.request,c));
-      return r;
-    }).catch(()=>caches.match(e.request)));
-  }else{
-    e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)));
-  }
-});
+self.addEventListener("fetch",e=>{if(e.request.method!=="GET")return;const u=new URL(e.request.url);if(u.origin===location.origin)e.respondWith(fetch(e.request,{cache:"no-store"}).then(r=>{const c=r.clone();caches.open(C).then(x=>x.put(e.request,c));return r}).catch(()=>caches.match(e.request)));else e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)))});
