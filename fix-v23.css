@@ -1,0 +1,11 @@
+/* v23 — clean mobile roadmap: remove unused search and tighten the layout to match the approved design. */
+.search{display:none!important}
+.road-title{margin-bottom:14px!important}
+.road-title h1{font-size:17px!important}
+.stage{border-radius:16px!important}
+.stagehead{padding:14px 15px!important;min-height:72px!important}
+.stagehead::before{width:46px!important;height:46px!important;background-size:28px 28px!important;border-radius:12px!important}
+.stagehead b{font-size:15px!important}
+.stagehead small{font-size:10px!important}
+.res{padding:10px!important;border-radius:12px!important}
+@media(max-width:700px){.content{padding:22px 14px 18px!important}.welcome h2{font-size:22px!important}.progress{margin-bottom:16px!important}.road-title{margin-bottom:10px!important}.stagehead{min-height:68px!important;padding:12px 13px!important}.stagehead::before{width:44px!important;height:44px!important}.stagehead b{font-size:14px!important}.resources{padding:0 10px 10px!important}.res{gap:8px!important}.res-check{width:56px!important;min-width:56px!important}.res-check .check{width:28px!important;height:28px!important}}
