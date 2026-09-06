@@ -8,8 +8,5 @@
     "directory": ".",
     "binding": "ASSETS",
     "run_worker_first": ["/verify"]
-  },
-  "secrets": {
-    "required": ["TURNSTILE_SECRET"]
   }
 }
