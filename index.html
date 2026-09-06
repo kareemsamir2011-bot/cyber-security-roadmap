@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Cyber Roadmap">
+<title>CYBER SECURITY ROADMAP</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-startup-image" href="icon.svg">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23070B12'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%2300E5FF' stroke-width='5'/%3E%3Cpath d='M38 51l8 8 16-16' fill='none' stroke='%2300E5FF' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #070b12;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif;
+    color: #f4f8ff;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; }
+
+  #phone {
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100dvh;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.045) 1px, transparent 0) 0 0/22px 22px,
+      linear-gradient(180deg, #0b1220 0%, #080d16 55%, #070b12 100%);
+    position: relative;
+  }
+  #app {
+    padding: calc(26px + env(safe-area-inset-top)) 18px calc(28px + env(safe-area-inset-bottom));
+    position: relative;
+    z-index: 1;
+  }
+
+  .eyebrow { font-size: 10px; color: #65758d; letter-spacing: 1px; margin-bottom: 10px; }
+  .header-title { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; font-weight: 700; font-size: 18px; color: #f5f7f9; letter-spacing: 0.5px; }
+  .hr { height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0.14), rgba(255,255,255,0)); margin: 18px 0 16px; }
+
+  .progress-card {
+    background: #101827;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .ring-wrap { position: relative; width: 52px; height: 52px; flex-shrink: 0; }
+  .ring-wrap svg { transform: rotate(-90deg); }
+  .ring-pct {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; font-size: 12px; font-weight: 700; color: #00e5ff;
+  }
+  .progress-label { font-size: 13px; font-weight: 700; color: #f4f8ff; }
+  .progress-count { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; font-size: 10.5px; color: #8291a8; margin-top: 2px; }
+
+  .stage-wrap { position: relative; padding-right: 50px; padding-bottom: 18px; }
+  .connector {
+    position: absolute; right: 19px; top: 40px; bottom: -4px; width: 2px;
+    background-image: linear-gradient(#253247, #253247);
+    background-size: 2px 6px;
+    background-repeat: repeat-y;
+    z-index: 1;
+  }
+  .connector.filled { background-image: linear-gradient(#00e5ff, #00e5ff); }
+  .connector.branch-red.filled { background-image: linear-gradient(#ff5577, #ff5577); }
+  .connector.branch-blue.filled { background-image: linear-gradient(#7c5cff, #7c5cff); }
+
+  .bullet {
+    position: absolute; right: 0; top: 4px; width: 38px; height: 38px; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.12); background: #101827; display: flex; align-items: center;
+    justify-content: center; z-index: 2; cursor: pointer; color: #8291a8; flex-shrink: 0;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .bullet.done { background: #2a2312; border-color: #00e5ff; color: #00e5ff; }
+  .bullet.done.branch-red { background: #2a1420; border-color: #ff5577; color: #ff5577; }
+  .bullet.done.branch-blue { background: #1d1738; border-color: #7c5cff; color: #7c5cff; }
+  .bullet.partial { border-style: dashed; }
+
+  .card {
+    background: #0e1624;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  .card.open { border-color: rgba(0,229,255,0.48); box-shadow: 0 4px 16px rgba(0,0,0,0.28); }
+  .card.open.branch-red { border-color: rgba(255,85,119,0.48); }
+  .card.open.branch-blue { border-color: rgba(124,92,255,0.48); }
+
+  .card-head {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 14px; background: transparent; border: none; text-align: right; cursor: pointer; color: inherit;
+  }
+  .stage-title { font-weight: 700; font-size: 15px; color: #f0f3f5; }
+  .stage-title.done { color: #9aa4b0; }
+  .stage-sub { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; font-size: 10px; color: #65758d; margin-top: 3px; letter-spacing: 0.4px; }
+  .stage-frac { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; font-size: 9.5px; color: #65758d; margin-top: 3px; }
+  .chevron { transition: transform .15s ease; flex-shrink: 0; margin-right: 8px; opacity: 0.6; }
+  .chevron.open { transform: rotate(180deg); }
+
+  .resources { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 7px; }
+  .resource {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+    background: #0a111c; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px;
+  }
+  .res-check {
+    width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid rgba(255,255,255,0.18);
+    background: transparent; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; cursor: pointer; color: transparent;
+  }
+  .res-check.done { color: #070b12; }
+  .res-link { flex: 1; display: flex; align-items: center; justify-content: space-between; text-decoration: none; color: inherit; min-width: 0; }
+  .res-left { display: flex; align-items: center; gap: 9px; min-width: 0; }
+  .res-icon {
+    width: 24px; height: 24px; border-radius: 7px; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; background: rgba(0,229,255,0.12); color: #00e5ff;
+  }
+  .res-icon.branch-red { background: rgba(255,85,119,0.13); color: #ff5577; }
+  .res-icon.branch-blue { background: rgba(124,92,255,0.13); color: #7c5cff; }
+  .res-label { font-size: 12.5px; font-weight: 500; color: #eaf4ff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .res-label.done { color: #65758d; text-decoration: line-through; }
+  .res-by { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; font-size: 9.5px; color: #65758d; margin-top: 1px; }
+
+  .banner {
+    margin: 4px 0 20px; padding: 12px 14px; background: linear-gradient(135deg, rgba(0,229,255,0.10), rgba(0,229,255,0.025));
+    border: 1px solid rgba(0,229,255,0.26);
+    border-radius: 12px; display: flex; align-items: center; gap: 9px; justify-content: center;
+  }
+  .banner span.txt { font-size: 12.5px; font-weight: 700; color: #9befff; }
+
+  .tabs { display: flex; gap: 8px; margin-bottom: 18px; background: #12151b; padding: 4px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); }
+  .tab {
+    flex: 1; padding: 9px 0; border-radius: 9px; border: none; background: transparent;
+    color: #8291a8; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif; font-weight: 700; font-size: 13px;
+    display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .tab.active-red { background: #2a1420; color: #ff91a8; }
+  .tab.active-blue { background: #1d1738; color: #b8a8ff; }
+
+  .footer { text-align: center; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; font-size: 9.5px; color: #45546b; margin-top: 16px; letter-spacing: 0.5px; }
+  .icon { display: inline-flex; }
+  svg { display: block; }
+  button { touch-action: manipulation; }
+  @media (max-width: 430px) {
+    #phone { width: 100%; max-width: none; }
+    #app { padding-left: 14px; padding-right: 14px; }
+    .header-title { font-size: 15px; }
+  }
+
+  /* Cyber redesign — visual only; roadmap/content/logic remain unchanged */
+  body { overscroll-behavior-y: none; }
+  #phone {
+    background:
+      radial-gradient(circle at 20% 0%, rgba(0,229,255,.09), transparent 34%),
+      radial-gradient(circle at 100% 45%, rgba(124,92,255,.07), transparent 30%),
+      linear-gradient(180deg, #0b1220 0%, #080d16 55%, #070b12 100%);
+  }
+  #app { padding-top: calc(22px + env(safe-area-inset-top)); }
+  .eyebrow { color:#5d708b; letter-spacing:1.4px; }
+  .header-title { color:#f7fbff; text-shadow:0 0 18px rgba(0,229,255,.12); }
+  .hr { background:linear-gradient(90deg, rgba(0,229,255,.35), rgba(124,92,255,.12), transparent); }
+  .progress-card {
+    background:linear-gradient(145deg, rgba(16,24,39,.96), rgba(10,17,28,.96));
+    border-color:rgba(0,229,255,.12);
+    box-shadow:0 10px 30px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.025);
+  }
+  .ring-pct { text-shadow:0 0 10px rgba(0,229,255,.25); }
+  .card {
+    background:linear-gradient(145deg, #101a2a, #0c1421);
+    box-shadow:0 6px 20px rgba(0,0,0,.12);
+  }
+  .card.open {
+    box-shadow:0 8px 28px rgba(0,0,0,.28), 0 0 0 1px rgba(0,229,255,.05);
+  }
+  .card-head { min-height:58px; }
+  .stage-title { letter-spacing:.1px; }
+  .resource {
+    background:linear-gradient(145deg,#0c1523,#09111d);
+    border-color:rgba(255,255,255,.065);
+  }
+  .resource:active, .card-head:active, .bullet:active, .res-check:active, .tab:active {
+    transform:scale(.985);
+  }
+  .res-check { transition:transform .12s ease, background .12s ease, border-color .12s ease; }
+  .res-icon { box-shadow:0 0 16px rgba(0,229,255,.05); }
+  .banner {
+    background:linear-gradient(135deg,rgba(0,229,255,.10),rgba(124,92,255,.08));
+    border-color:rgba(0,229,255,.22);
+    box-shadow:0 8px 24px rgba(0,0,0,.18);
+  }
+  .tabs { background:#0b1220; border-color:rgba(255,255,255,.07); }
+  .tab.active-red { background:rgba(255,85,119,.13); color:#ff91a8; }
+  .tab.active-blue { background:rgba(124,92,255,.13); color:#b8a8ff; }
+  .footer { color:#52637a; }
+
+</style>
+</head>
+<body>
+<div id="phone"><div id="app"></div></div>
+
+<script>
+const mainStages = [
+  { id: 1, title: "أساسيات علوم الحاسب", subtitle: "Computer Science", icon: "cpu",
+    resources: [{ label: "CompTIA A+", by: "Sameh Ramadan", type: "playlist", url: "https://www.youtube.com/playlist?list=PLH-n8YK76vIiDdOMRB-ylvns-_8Zl1euV" }] },
+  { id: 2, title: "الشبكات", subtitle: "Network", icon: "network",
+    resources: [{ label: "CompTIA Network+", by: "Sameh Ramadan", type: "playlist", url: "https://www.youtube.com/playlist?list=PLH-n8YK76vIiuIZoWvHL7AvtrDV7hR3He" }] },
+  { id: 3, title: "لينكس", subtitle: "Linux", icon: "terminal",
+    resources: [
+      { label: "Linux", by: "Hacktivity-AR", type: "playlist", url: "https://www.youtube.com/playlist?list=PLDxVq3TlR9y2sMXaL_yLp-r6pUpevgC-w" },
+      { label: "Linux System Administration", by: "Arab Linux Community", type: "playlist", url: "https://www.youtube.com/playlist?list=PLy1Fx2HfcmWBpD_PI4AQpjeDK5-5q6TG7" }
+    ]},
+  { id: 4, title: "أوامر الويندوز", subtitle: "Windows Commands", icon: "command",
+    resources: [{ label: "PowerShell", by: "تقنية دوت نت", type: "video", url: "https://www.youtube.com/watch?v=6GPZthxEKU0" }] },
+  { id: 5, title: "البرمجة", subtitle: "Programming", icon: "code",
+    resources: [
+      { label: "HTML و CSS", by: "Yehia Tech", type: "video", url: "https://www.youtube.com/watch?v=Pwatx1n1Ws0" },
+      { label: "JavaScript", by: "Elzero Web School", type: "playlist", url: "https://www.youtube.com/playlist?list=PLDoPjvoNmBAx3kiplQR_oeDqLDBUDYwVv" },
+      { label: "PHP", by: "Nour Homsi", type: "video", url: "https://www.youtube.com/watch?v=pszZMzI9a7A" },
+      { label: "MySQL", by: "كورسات في البرمجة", type: "video", url: "https://www.youtube.com/watch?v=N-WPYk417yE" },
+      { label: "CRUD", by: "Nour Homsi", type: "video", url: "https://www.youtube.com/watch?v=6hgBFDTTwEk" },
+      { label: "Secure Web App", by: "Elzero Web School", type: "playlist", url: "https://www.youtube.com/playlist?list=PLDoPjvoNmBAypWmEHEy3awR6Ek9sUe5ZS" },
+      { label: "Python", by: "Abdelrahman Gamal", type: "playlist", url: "https://www.youtube.com/playlist?list=PLknwEmKsW8OsG8dnisr_-2WGyx7lpgGEE" }
+    ]},
+  { id: 6, title: "أساسيات الأمن السيبراني", subtitle: "Security Basics", icon: "shield",
+    resources: [{ label: "Security+ SY0-601 Prep", by: "Netriders Academy - Ahmed Sultan", type: "certificate", url: "https://netriders.academy/courses/security/" }] },
+  { id: 7, title: "اختبار الاختراق", subtitle: "Penetration Testing", icon: "crosshair",
+    resources: [{ label: "eJPTv1 Prep", by: "Netriders Academy - Ahmed Sultan", type: "certificate", url: "https://netriders.academy/courses/penetration-testing-student" }] },
+  { id: 8, title: "اختبار اختراق تطبيقات الويب", subtitle: "WAPT", icon: "bug",
+    resources: [
+      { label: "Web App Basics + Burp Suite + ZAProxy", by: "GenTiL Security", type: "video", url: "https://www.youtube.com/watch?v=MFanMkTGJSo" },
+      { label: "WAPT Course", by: "GenTiL Security", type: "playlist", url: "https://www.youtube.com/playlist?list=PLX621demLUSaA7ngeN7UfVzYJihHnEfv0" }
+    ]}
+];
+const redTeam = [
+  { id: "r1", title: "الأمن الهجومي", subtitle: "Offensive Security", icon: "zap",
+    resources: [{ label: "OSCP", by: "Nakerah Network", type: "playlist", url: "https://www.youtube.com/playlist?list=PL_yseowcuqYJc7wXtGIsshYp1B_W0M-ZK" }] }
+];
+const blueTeam = [
+  { id: "b1", title: "الاستجابة للحوادث", subtitle: "Incident Response", icon: "activity",
+    resources: [{ label: "eCIR Prep", by: "Netriders Academy - Ahmed Sultan", type: "certificate", url: "https://netriders.academy/courses/incident-response" }] },
+  { id: "b2", title: "أمن الشبكات", subtitle: "Network Security", icon: "lock",
+    resources: [{ label: "CCNP Security SCOR", by: "Netriders Academy - Ahmed Sultan", type: "certificate", url: "https://netriders.academy/courses/scor" }] }
+];
+
+const STORAGE_KEY = "cyber_roadmap_progress_v3";
+let state = { doneRes: {}, open: { 1: true }, branch: "red" };
+try {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (saved) state = Object.assign(state, JSON.parse(saved));
+} catch (e) {}
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+}
+
+function resKey(stageId, idx) { return stageId + ":" + idx; }
+function stageCounts(stage) {
+  const total = stage.resources.length;
+  let done = 0;
+  stage.resources.forEach((r, i) => { if (state.doneRes[resKey(stage.id, i)]) done++; });
+  return { done, total };
+}
+
+const ICONS = {
+  cpu: '<rect x="6" y="6" width="12" height="12" rx="1.5"></rect><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"></path>',
+  network: '<circle cx="12" cy="4" r="2"></circle><circle cx="5" cy="19" r="2"></circle><circle cx="19" cy="19" r="2"></circle><path d="M12 6v5M12 11l-6 6M12 11l6 6"></path>',
+  terminal: '<polyline points="4 6 9 12 4 18"></polyline><line x1="12" y1="18" x2="20" y2="18"></line>',
+  command: '<path d="M8 4a2 2 0 1 0 2 2v12a2 2 0 1 0-2-2 2 2 0 1 0-2 2h12a2 2 0 1 0-2-2V6a2 2 0 1 0 2-2 2 2 0 1 0-2 2H6a2 2 0 1 0 2-2z"></path>',
+  code: '<polyline points="8 5 3 12 8 19"></polyline><polyline points="16 5 21 12 16 19"></polyline>',
+  shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>',
+  crosshair: '<circle cx="12" cy="12" r="9"></circle><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line>',
+  bug: '<rect x="8" y="7" width="8" height="12" rx="4"></rect><path d="M12 7V4M8 9 5 6M16 9l3-3M5 13H2M22 13h-3M8 17l-3 3M16 17l3 3"></path>',
+  zap: '<polygon points="13 2 3 14 11 14 10 22 21 10 13 10 13 2"></polygon>',
+  activity: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>',
+  lock: '<rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path>',
+  award: '<circle cx="12" cy="8" r="5"></circle><path d="M8.5 12.5 7 22l5-3 5 3-1.5-9.5"></path>',
+  play: '<polygon points="6 4 20 12 6 20 6 4"></polygon>',
+  yt: '<path d="M22.5 6.4a2.8 2.8 0 0 0-2-2C18.9 4 12 4 12 4s-6.9 0-8.6.4a2.8 2.8 0 0 0-2 2A29 29 0 0 0 1 11.8a29 29 0 0 0 .5 5.3 2.8 2.8 0 0 0 2 2c1.6.5 8.5.5 8.5.5s6.9 0 8.6-.5a2.8 2.8 0 0 0 2-2 29 29 0 0 0 .4-5.3 29 29 0 0 0-.4-5.4z"></path><polygon points="9.8 15 15.5 11.8 9.8 8.5 9.8 15"></polygon>',
+  check: '<polyline points="20 6 9 17 4 12"></polyline>',
+  chevron: '<polyline points="6 9 12 15 18 9"></polyline>',
+  external: '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>',
+  radio: '<circle cx="12" cy="12" r="2"></circle><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-8.49a6 6 0 0 0 0 8.49m11.31-11.31a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>'
+};
+function svgIcon(name, size, strokeWidth) {
+  strokeWidth = strokeWidth || 2;
+  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + strokeWidth + '" stroke-linecap="round" stroke-linejoin="round">' + ICONS[name] + '</svg>';
+}
+function resTypeIcon(type) {
+  if (type === "certificate") return svgIcon("award", 13, 2);
+  if (type === "playlist") return svgIcon("yt", 13, 0);
+  return svgIcon("play", 13, 0);
+}
+
+function renderStage(stage, accentClass) {
+  const { done, total } = stageCounts(stage);
+  const fully = done === total;
+  const partial = done > 0 && !fully;
+  const isOpen = !!state.open[stage.id];
+
+  const resourcesHtml = stage.resources.map((r, i) => {
+    const key = resKey(stage.id, i);
+    const rDone = !!state.doneRes[key];
+    return `
+    <div class="resource">
+      <button class="res-check ${rDone ? 'done' : ''}" style="${rDone ? 'background:' + (accentClass ? (accentClass==='branch-red' ? '#ff5577' : '#7c5cff') : '#00e5ff') + ';border-color:transparent' : ''}" data-toggle-res="${key}">
+        ${rDone ? svgIcon("check", 13, 3) : ""}
+      </button>
+      <a class="res-link" href="${r.url}" target="_blank" rel="noreferrer">
+        <div class="res-left">
+          <span class="res-icon ${accentClass}">${resTypeIcon(r.type)}</span>
+          <div>
+            <div class="res-label ${rDone ? 'done' : ''}">${r.label}</div>
+            <div class="res-by">${r.by}</div>
+          </div>
+        </div>
+        <span style="color:#45546b;flex-shrink:0">${svgIcon("external", 12, 2)}</span>
+      </a>
+    </div>
+  `;
+  }).join("");
+
+  return `
+    <div class="stage-wrap" data-stage="${stage.id}">
+      <div class="bullet ${fully ? 'done ' + accentClass : ''} ${partial ? 'partial' : ''}" data-toggle-stage="${stage.id}">
+        ${svgIcon(fully ? "check" : stage.icon, 16, fully ? 3 : 1.8)}
+      </div>
+      <div class="card ${isOpen ? 'open ' + accentClass : ''}">
+        <button class="card-head" data-toggle-open="${stage.id}">
+          <div style="min-width:0">
+            <div class="stage-title ${fully ? 'done' : ''}">${stage.title}</div>
+            <div class="stage-sub">${stage.subtitle}</div>
+            <div class="stage-frac">${done}/${total} مصادر</div>
+          </div>
+          <span class="chevron ${isOpen ? 'open' : ''}">${svgIcon("chevron", 17, 2)}</span>
+        </button>
+        ${isOpen ? `<div class="resources">${resourcesHtml}</div>` : ""}
+      </div>
+    </div>
+  `;
+}
+
+function render() {
+  let doneCore = 0, totalCore = 0;
+  mainStages.forEach(s => { const c = stageCounts(s); doneCore += c.done; totalCore += c.total; });
+  const doneStagesCore = mainStages.filter(s => { const c = stageCounts(s); return c.done === c.total; }).length;
+  const pct = totalCore ? Math.round((doneCore / totalCore) * 100) : 0;
+  const branchStages = state.branch === "red" ? redTeam : blueTeam;
+  const branchAccentClass = state.branch === "red" ? "branch-red" : "branch-blue";
+
+  const r = 22, c = 2 * Math.PI * r;
+  const dash = (pct / 100) * c;
+
+  const stagesHtml = mainStages.map((s, i) => {
+    const { done, total } = stageCounts(s);
+    const connector = i < mainStages.length - 1
+      ? `<div class="connector ${done === total ? 'filled' : ''}"></div>` : "";
+    return connector + renderStage(s, "");
+  }).join("");
+
+  const branchHtml = branchStages.map((s, i) => {
+    const { done, total } = stageCounts(s);
+    const connector = i < branchStages.length - 1
+      ? `<div class="connector ${branchAccentClass} ${done === total ? 'filled' : ''}"></div>` : "";
+    return connector + renderStage(s, branchAccentClass);
+  }).join("");
+
+  document.getElementById("app").innerHTML = `
+    <div class="eyebrow mono">MR. KAREEM ELSHORBAGY / ROBOT</div>
+    <div class="header-title">CYBER SECURITY ROADMAP — FREE COURSES</div>
+
+    <div class="hr"></div>
+
+    <div class="progress-card">
+      <div class="ring-wrap">
+        <svg width="52" height="52" viewBox="0 0 52 52">
+          <circle cx="26" cy="26" r="${r}" fill="none" stroke="#253247" stroke-width="4"></circle>
+          <circle cx="26" cy="26" r="${r}" fill="none" stroke="#00e5ff" stroke-width="4"
+            stroke-linecap="round" stroke-dasharray="${dash} ${c}"></circle>
+        </svg>
+        <div class="ring-pct">${pct}%</div>
+      </div>
+      <div>
+        <div class="progress-label">التقدم في المسار الأساسي</div>
+        <div class="progress-count">${doneStagesCore}/${mainStages.length} مراحل · ${doneCore}/${totalCore} مصدر مكتمل</div>
+      </div>
+    </div>
+
+    <div>${stagesHtml}</div>
+
+    <div class="banner">
+      <span class="icon" style="color:#00e5ff">${svgIcon("radio", 14, 2)}</span>
+      <span class="txt">أنت الآن صائد ثغرات محترف</span>
+    </div>
+
+    <div class="tabs">
+      <button class="tab ${state.branch === 'red' ? 'active-red' : ''}" data-branch="red">
+        ${svgIcon("zap", 14, 2)} Red Team
+      </button>
+      <button class="tab ${state.branch === 'blue' ? 'active-blue' : ''}" data-branch="blue">
+        ${svgIcon("lock", 14, 2)} Blue Team
+      </button>
+    </div>
+
+    <div>${branchHtml}</div>
+
+    <div class="footer">MR. Kareem Elshorbagy / ROBOT</div>
+  `;
+
+  document.querySelectorAll("[data-toggle-res]").forEach(el => {
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      const key = el.getAttribute("data-toggle-res");
+      state.doneRes[key] = !state.doneRes[key];
+      save();
+      render();
+    });
+  });
+  document.querySelectorAll("[data-toggle-stage]").forEach(el => {
+    el.addEventListener("click", () => {
+      const id = el.getAttribute("data-toggle-stage");
+      const stage = [...mainStages, ...redTeam, ...blueTeam].find(s => String(s.id) === id);
+      if (!stage) return;
+      const { done, total } = stageCounts(stage);
+      const makeDone = done !== total;
+      stage.resources.forEach((r, i) => { state.doneRes[resKey(stage.id, i)] = makeDone; });
+      save();
+      render();
+    });
+  });
+  document.querySelectorAll("[data-toggle-open]").forEach(el => {
+    el.addEventListener("click", () => {
+      const id = el.getAttribute("data-toggle-open");
+      const key = isNaN(id) ? id : Number(id);
+      state.open[key] = !state.open[key];
+      save();
+      render();
+    });
+  });
+  document.querySelectorAll("[data-branch]").forEach(el => {
+    el.addEventListener("click", () => {
+      state.branch = el.getAttribute("data-branch");
+      save();
+      render();
+    });
+  });
+}
+
+render();
+</script>
+</body>
+</html>
