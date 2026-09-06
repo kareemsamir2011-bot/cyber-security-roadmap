@@ -8,10 +8,8 @@
 <meta name="apple-mobile-web-app-title" content="Cyber Roadmap">
 <title>CYBER SECURITY ROADMAP</title>
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icon.svg">
-<link rel="icon" type="image/svg+xml" href="icon.svg">
-<link rel="apple-touch-startup-image" href="icon.svg">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23070B12'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%2300E5FF' stroke-width='5'/%3E%3Cpath d='M38 51l8 8 16-16' fill='none' stroke='%2300E5FF' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" href="icon.svg">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2314181F'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23D9A441' stroke-width='5'/%3E%3Cpath d='M38 51l8 8 16-16' fill='none' stroke='%23D9A441' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body {
@@ -92,9 +90,9 @@
     overflow: hidden;
     transition: border-color .15s ease, box-shadow .15s ease;
   }
-  .card.open { border-color: rgba(0,229,255,0.48); box-shadow: 0 4px 16px rgba(0,0,0,0.28); }
-  .card.open.branch-red { border-color: rgba(255,85,119,0.48); }
-  .card.open.branch-blue { border-color: rgba(124,92,255,0.48); }
+  .card.open { border-color: rgba(217,164,65,0.45); box-shadow: 0 4px 16px rgba(0,0,0,0.28); }
+  .card.open.branch-red { border-color: rgba(193,97,79,0.45); }
+  .card.open.branch-blue { border-color: rgba(79,132,171,0.45); }
 
   .card-head {
     width: 100%; display: flex; align-items: center; justify-content: space-between;
@@ -122,17 +120,17 @@
   .res-left { display: flex; align-items: center; gap: 9px; min-width: 0; }
   .res-icon {
     width: 24px; height: 24px; border-radius: 7px; display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; background: rgba(0,229,255,0.12); color: #00e5ff;
+    flex-shrink: 0; background: rgba(217,164,65,0.12); color: #00e5ff;
   }
-  .res-icon.branch-red { background: rgba(255,85,119,0.13); color: #ff5577; }
-  .res-icon.branch-blue { background: rgba(124,92,255,0.13); color: #7c5cff; }
+  .res-icon.branch-red { background: rgba(193,97,79,0.14); color: #ff5577; }
+  .res-icon.branch-blue { background: rgba(79,132,171,0.14); color: #7c5cff; }
   .res-label { font-size: 12.5px; font-weight: 500; color: #eaf4ff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .res-label.done { color: #65758d; text-decoration: line-through; }
   .res-by { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace; font-size: 9.5px; color: #65758d; margin-top: 1px; }
 
   .banner {
-    margin: 4px 0 20px; padding: 12px 14px; background: linear-gradient(135deg, rgba(0,229,255,0.10), rgba(0,229,255,0.025));
-    border: 1px solid rgba(0,229,255,0.26);
+    margin: 4px 0 20px; padding: 12px 14px; background: linear-gradient(135deg, rgba(217,164,65,0.10), rgba(217,164,65,0.02));
+    border: 1px solid rgba(217,164,65,0.25);
     border-radius: 12px; display: flex; align-items: center; gap: 9px; justify-content: center;
   }
   .banner span.txt { font-size: 12.5px; font-weight: 700; color: #9befff; }
@@ -157,52 +155,14 @@
     .header-title { font-size: 15px; }
   }
 
-  /* Cyber redesign — visual only; roadmap/content/logic remain unchanged */
-  body { overscroll-behavior-y: none; }
-  #phone {
-    background:
-      radial-gradient(circle at 20% 0%, rgba(0,229,255,.09), transparent 34%),
-      radial-gradient(circle at 100% 45%, rgba(124,92,255,.07), transparent 30%),
-      linear-gradient(180deg, #0b1220 0%, #080d16 55%, #070b12 100%);
-  }
-  #app { padding-top: calc(22px + env(safe-area-inset-top)); }
-  .eyebrow { color:#5d708b; letter-spacing:1.4px; }
-  .header-title { color:#f7fbff; text-shadow:0 0 18px rgba(0,229,255,.12); }
-  .hr { background:linear-gradient(90deg, rgba(0,229,255,.35), rgba(124,92,255,.12), transparent); }
-  .progress-card {
-    background:linear-gradient(145deg, rgba(16,24,39,.96), rgba(10,17,28,.96));
-    border-color:rgba(0,229,255,.12);
-    box-shadow:0 10px 30px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.025);
-  }
-  .ring-pct { text-shadow:0 0 10px rgba(0,229,255,.25); }
-  .card {
-    background:linear-gradient(145deg, #101a2a, #0c1421);
-    box-shadow:0 6px 20px rgba(0,0,0,.12);
-  }
-  .card.open {
-    box-shadow:0 8px 28px rgba(0,0,0,.28), 0 0 0 1px rgba(0,229,255,.05);
-  }
-  .card-head { min-height:58px; }
-  .stage-title { letter-spacing:.1px; }
-  .resource {
-    background:linear-gradient(145deg,#0c1523,#09111d);
-    border-color:rgba(255,255,255,.065);
-  }
-  .resource:active, .card-head:active, .bullet:active, .res-check:active, .tab:active {
-    transform:scale(.985);
-  }
-  .res-check { transition:transform .12s ease, background .12s ease, border-color .12s ease; }
-  .res-icon { box-shadow:0 0 16px rgba(0,229,255,.05); }
-  .banner {
-    background:linear-gradient(135deg,rgba(0,229,255,.10),rgba(124,92,255,.08));
-    border-color:rgba(0,229,255,.22);
-    box-shadow:0 8px 24px rgba(0,0,0,.18);
-  }
-  .tabs { background:#0b1220; border-color:rgba(255,255,255,.07); }
-  .tab.active-red { background:rgba(255,85,119,.13); color:#ff91a8; }
-  .tab.active-blue { background:rgba(124,92,255,.13); color:#b8a8ff; }
-  .footer { color:#52637a; }
-
+/* Visual redesign only */
+body{overscroll-behavior-y:none}
+#phone{background:radial-gradient(circle at 20% 0%,rgba(0,229,255,.09),transparent 34%),radial-gradient(circle at 100% 45%,rgba(124,92,255,.07),transparent 30%),linear-gradient(180deg,#0b1220 0%,#080d16 55%,#070b12 100%)}
+.progress-card{background:linear-gradient(145deg,rgba(16,24,39,.96),rgba(10,17,28,.96));box-shadow:0 10px 30px rgba(0,0,0,.24)}
+.card{background:linear-gradient(145deg,#101a2a,#0c1421);box-shadow:0 6px 20px rgba(0,0,0,.12)}
+.resource{background:linear-gradient(145deg,#0c1523,#09111d)}
+.banner{background:linear-gradient(135deg,rgba(0,229,255,.10),rgba(124,92,255,.08));border-color:rgba(0,229,255,.22)}
+.tabs{background:#0b1220}
 </style>
 </head>
 <body>
@@ -211,7 +171,10 @@
 <script>
 const mainStages = [
   { id: 1, title: "أساسيات علوم الحاسب", subtitle: "Computer Science", icon: "cpu",
-    resources: [{ label: "CompTIA A+", by: "Sameh Ramadan", type: "playlist", url: "https://www.youtube.com/playlist?list=PLH-n8YK76vIiDdOMRB-ylvns-_8Zl1euV" }] },
+    resources: [
+      { label: "CS50 Harvard", by: "Nouvil", type: "video", url: "https://nouvil.net/courses/cs50-2022/" },
+      { label: "CompTIA A+", by: "Sameh Ramadan", type: "playlist", url: "https://www.youtube.com/playlist?list=PLH-n8YK76vIiDdOMRB-ylvns-_8Zl1euV" }
+    ] },
   { id: 2, title: "الشبكات", subtitle: "Network", icon: "network",
     resources: [{ label: "CompTIA Network+", by: "Sameh Ramadan", type: "playlist", url: "https://www.youtube.com/playlist?list=PLH-n8YK76vIiuIZoWvHL7AvtrDV7hR3He" }] },
   { id: 3, title: "لينكس", subtitle: "Linux", icon: "terminal",
@@ -375,7 +338,7 @@ function render() {
 
   document.getElementById("app").innerHTML = `
     <div class="eyebrow mono">MR. KAREEM ELSHORBAGY / ROBOT</div>
-    <div class="header-title">CYBER SECURITY ROADMAP — FREE COURSES</div>
+    <div class="header-title">CYBER SECURITY ROADMAP — FREE ARABIC COURSES</div>
 
     <div class="hr"></div>
 
