@@ -1,0 +1,23 @@
+/* v22: keep original roadmap order; polish team tabs, branch icons, completion checks and percentage progress. */
+/* Team cards: blue is blue, red is red, with a clear selected state. */
+.content nav button.active.red{background:linear-gradient(135deg,rgba(255,30,58,.20),rgba(120,8,28,.22))!important;border:1px solid rgba(255,30,58,.72)!important;color:#ff6b7e!important;box-shadow:0 0 22px rgba(255,30,58,.16),inset 0 0 18px rgba(255,30,58,.06)!important}
+.content nav button.active.blue{background:linear-gradient(135deg,rgba(50,145,230,.20),rgba(12,45,78,.24))!important;border:1px solid rgba(72,174,255,.70)!important;color:#69c3ff!important;box-shadow:0 0 22px rgba(55,158,255,.14),inset 0 0 18px rgba(55,158,255,.05)!important}
+/* Icons for Red/Blue Team cards. */
+.stage.red .stagehead::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff1e3a' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3 20 7v5c0 4.5-3.1 7.5-8 9-4.9-1.5-8-4.5-8-9V7l8-4Z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E")!important}
+.stage.blue .stagehead::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23379eff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='6' cy='12' r='2.2'/%3E%3Ccircle cx='18' cy='6' r='2.2'/%3E%3Ccircle cx='18' cy='18' r='2.2'/%3E%3Cpath d='M8 11l8-5M8 13l8 5'/%3E%3C/svg%3E")!important}
+/* Explicit completion control under every course. */
+.res-check{width:68px!important;min-width:68px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:5px!important}
+.res-check .check{width:30px!important;height:30px!important;border-radius:8px!important;border:1px solid #465a70!important;background:#08101a!important;color:#fff!important;display:grid!important;place-items:center!important;font-size:17px!important;line-height:1!important}
+.res-check .check.on{background:#35d27f!important;border-color:#35d27f!important;color:#04110a!important;box-shadow:0 0 14px rgba(53,210,127,.28)!important}
+.res-check span{font-size:10px!important;color:#7d8da2!important;white-space:nowrap!important}
+.res-check .check.on+span{color:#35d27f!important;font-weight:800!important}
+/* Percentage progress: no spinning/ring UI. */
+.progress{display:block!important;padding:18px 20px!important}
+.progress .ring{display:none!important}
+.progress-copy{display:grid!important;grid-template-columns:1fr auto!important;align-items:center!important;gap:3px 14px!important}
+.progress-copy b{font-size:17px!important}
+.progress-copy strong{font-size:27px!important;line-height:1!important;color:#ff3150!important}
+.progress-copy small{grid-column:1/-1!important;color:#8290a5!important;font-size:11px!important}
+.progress-bar{display:block!important;width:100%!important;height:10px!important;margin-top:14px!important;border-radius:999px!important;background:#182230!important;overflow:hidden!important}
+.progress-bar span{display:block!important;height:100%!important;border-radius:999px!important;background:linear-gradient(90deg,#ff1638,#ff4a62)!important;box-shadow:0 0 16px rgba(255,30,58,.42)!important;transition:width .35s ease!important}
+@media(max-width:700px){.res-check{width:58px!important;min-width:58px!important}.res-check .check{width:28px!important;height:28px!important}.progress-copy strong{font-size:23px!important}.content nav button{min-height:44px!important}}
