@@ -1,4 +1,4 @@
-const C="cyber-roadmap-v29";
+const C="cyber-roadmap-v30";
 const A=[];
 self.addEventListener("install",e=>e.waitUntil(self.skipWaiting()));
 self.addEventListener("activate",e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim())));
