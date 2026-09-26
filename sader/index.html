@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>سجل الصادر الصوتي</title>
+<style>
+body{font-family:Tahoma,Arial,sans-serif;background:#f3f6fb;margin:0;padding:24px;color:#172033}
+.card{max-width:680px;margin:auto;background:#fff;border-radius:20px;padding:24px;box-shadow:0 8px 30px #0001}
+h1{text-align:center;margin:0 0 8px}.sub{text-align:center;color:#667085;margin-bottom:20px}
+button,input,textarea{font:inherit}button{width:100%;border:0;border-radius:14px;padding:15px;margin:8px 0;font-weight:bold;font-size:18px;cursor:pointer}
+#record{background:#1976d2;color:white}#record.on{background:#c62828}#save{background:#16803c;color:white}
+label{display:block;font-weight:bold;margin-top:14px}input,textarea{width:100%;box-sizing:border-box;padding:12px;border:1px solid #d0d5dd;border-radius:10px;margin-top:6px}textarea{min-height:100px}
+#status{text-align:center;font-weight:bold;min-height:24px;margin:12px 0}.raw{background:#f8fafc;padding:10px;border-radius:10px;color:#475467;font-size:14px}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>📋 سجل الصادر</h1>
+<div class="sub">اتكلم طبيعي، راجع البيانات، ثم اضغط تسجيل في الشيت</div>
+<button id="record">🎙️ ابدأ التسجيل</button>
+<div id="status">جاهز</div>
+<div id="raw" class="raw" hidden></div>
+<label>رقم الصادر</label><input id="number">
+<label>تاريخ الصادر</label><input id="date" placeholder="26/09/2026">
+<label>الجهة الصادر لها</label><input id="recipient">
+<label>ملخص الخطاب</label><textarea id="summary"></textarea>
+<button id="save">💾 تسجيل في الشيت</button>
+</div>
+<script>
+const API="https://script.google.com/macros/s/AKfycbwcx9JaqcLnerzcb_J1vPjyN3lx5FLTDTea0W9YuePi3S97PHPro234-Ba98n9xUfh-/exec";
+const $=id=>document.getElementById(id);
+const norm=s=>s.replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d));
+function parse(t){
+ t=t.replace(/[،,]/g," ").replace(/\s+/g," ").trim();
+ let n=(t.match(/(?:صادر\s*رقم|رقم\s*(?:الصادر|صادر))\s*([0-9٠-٩]+)/i)||[])[1]||"";
+ let d=(t.match(/(?:بتاريخ|تاريخ)\s+(.+?)(?=\s+(?:إلى|الى|لدى|ل|بخصوص|بشأن|عن)\s+|$)/i)||[])[1]||"";
+ let r=(t.match(/(?:إلى|الى|لدى|ل)\s+(.+?)(?=\s+(?:بخصوص|بشأن|عن)\s+|$)/i)||[])[1]||"";
+ let s=(t.match(/(?:بخصوص|بشأن|عن)\s+(.+)$/i)||[])[1]||"";
+ $("number").value=norm(n);$("date").value=d.trim();$("recipient").value=r.trim();$("summary").value=s.trim();
+ $("raw").hidden=false;$("raw").textContent="النص المسموع: "+t;
+}
+$("record").onclick=()=>{
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){$("status").textContent="❌ استخدم Chrome أو Edge.";return}
+ const x=new SR();x.lang="ar-EG";x.continuous=false;x.interimResults=false;
+ x.onstart=()=>{$("record").classList.add("on");$("record").textContent="⏹️ جاري الاستماع...";$("status").textContent="🎙️ اتكلم الآن"};
+ x.onresult=e=>{parse(e.results[0][0].transcript);$("status").textContent="✅ تم التحويل — راجع البيانات"};
+ x.onerror=e=>{$("status").textContent="❌ خطأ في التسجيل: "+e.error};
+ x.onend=()=>{$("record").classList.remove("on");$("record").textContent="🎙️ ابدأ التسجيل"};
+ try{x.start()}catch(e){$("status").textContent="❌ "+e.message}
+};
+$("save").onclick=()=>{
+ const data={issue_number:$("number").value.trim(),issue_date:$("date").value.trim(),recipient:$("recipient").value.trim(),summary:$("summary").value.trim()};
+ if(!data.issue_number&&!data.recipient&&!data.summary){$("status").textContent="⚠️ مفيش بيانات";return}
+ $("status").textContent="⏳ جاري الإرسال...";
+ fetch(API,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)})
+ .then(()=>{$("status").textContent="✅ تم إرسال البيانات للشيت";})
+ .catch(e=>{$("status").textContent="❌ فشل الإرسال: "+e.message});
+};
+</script>
+</body>
+</html>
