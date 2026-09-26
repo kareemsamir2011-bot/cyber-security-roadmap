@@ -53,10 +53,13 @@ $("record").onclick=()=>{
 $("save").onclick=()=>{
  const data={issue_number:$("number").value.trim(),issue_date:$("date").value.trim(),recipient:$("recipient").value.trim(),summary:$("summary").value.trim()};
  if(!data.issue_number&&!data.recipient&&!data.summary){$("status").textContent="⚠️ مفيش بيانات";return}
- $("status").textContent="⏳ جاري الإرسال...";
- fetch(API,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)})
- .then(()=>{$("status").textContent="✅ تم إرسال البيانات للشيت";})
- .catch(e=>{$("status").textContent="❌ فشل الإرسال: "+e.message});
+ $("status").textContent="⏳ جاري التسجيل...";
+ const q=new URLSearchParams(data);
+ // استخدام GET عبر صورة مخفية يتجنب مشكلة CORS/Redirect الخاصة بـ Apps Script.
+ const img=new Image();
+ img.onload=img.onerror=()=>{$("status").textContent="✅ تم إرسال البيانات للشيت — افتح الشيت للتأكد";};
+ img.src=API+"?"+q.toString()+"&_t="+Date.now();
+ setTimeout(()=>{$("status").textContent="✅ تم إرسال طلب التسجيل — راجع الشيت";},1200);
 };
 </script>
 </body>
